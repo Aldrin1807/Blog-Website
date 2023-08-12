@@ -68,7 +68,7 @@ namespace Blog.Data.Services
             return true;
         }
 
-        public async Task<List<Models.Blog>> GetBlogs()=>await _context.Blogs.Include(b => b.User).Include(b => b.Comments).Include(b => b.Likes).ToListAsync();
+        public async Task<List<Models.Blog>> GetBlogs()=>await _context.Blogs.ToListAsync();
 
         public async Task<bool> UpdateBlog(BlogDTO blog,int blogID)
         {

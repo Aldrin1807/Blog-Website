@@ -37,7 +37,7 @@ namespace Blog
                 .AddDefaultTokenProviders();
 
             builder.Services.AddScoped<IAuthServices,AuthServices>();
-         //   builder.Services.AddScoped<IBlogServices, BlogServices>();
+            builder.Services.AddScoped<IBlogServices,BlogServices>();
           //  builder.Services.AddScoped<ICommentServices,CommentServices >();
            // builder.Services.AddScoped<ILikeServices,LikeServices>();
 
