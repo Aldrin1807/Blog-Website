@@ -38,7 +38,7 @@ namespace Blog.Controllers
             try
             {
                 var response = await _services.DeleteBlog(blogID);
-                return Ok(Response);
+                return Ok(response);
             }catch(Exception e)
             {
                 return BadRequest(e.Message);
