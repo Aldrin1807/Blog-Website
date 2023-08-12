@@ -9,6 +9,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Blog
 {
@@ -38,10 +39,10 @@ namespace Blog
 
             builder.Services.AddScoped<IAuthServices,AuthServices>();
             builder.Services.AddScoped<IBlogServices,BlogServices>();
-          //  builder.Services.AddScoped<ICommentServices,CommentServices >();
+            builder.Services.AddScoped<ICommentServices,CommentServices >();
            // builder.Services.AddScoped<ILikeServices,LikeServices>();
 
-
+            
 
             // JWT Configuration
             builder.Services.AddSwaggerGen(options =>

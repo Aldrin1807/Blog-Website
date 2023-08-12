@@ -1,4 +1,6 @@
-﻿namespace Blog.Models
+﻿using System.Text.Json.Serialization;
+
+namespace Blog.Models
 {
     public class Blog
     {
@@ -12,8 +14,11 @@
 
         //Relationships
         public string UserID { get; set; }
+        [JsonIgnore]
         public ApplicationUser User { get; set; }
+        [JsonIgnore]
         public List<Comment> Comments { get; set; }
+        [JsonIgnore]
         public List<Like> Likes { get; set; }
     }
 }

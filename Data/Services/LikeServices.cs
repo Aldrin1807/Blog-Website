@@ -1,6 +1,8 @@
-﻿namespace Blog.Data.Services
+﻿using Blog.Data.IServices;
+
+namespace Blog.Data.Services
 {
-    public class LikeServices
+    public class LikeServices:ILikeServices
     {
     }
 }

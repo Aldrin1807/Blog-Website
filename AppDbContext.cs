@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 namespace Blog
 {
@@ -33,6 +34,10 @@ namespace Blog
                 .OnDelete(DeleteBehavior.NoAction);
 
             //Many to many for Comments
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.Id)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Comment>()
                 .HasKey(c => new {c.Id,c.BlogPostId,c.UserId });
             modelBuilder.Entity<Comment>()
