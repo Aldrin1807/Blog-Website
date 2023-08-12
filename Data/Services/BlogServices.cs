@@ -63,6 +63,21 @@ namespace Blog.Data.Services
             {
                 throw new Exception("Blog not found");
             }
+            if (!string.IsNullOrEmpty(blog.ImagePath))
+            {
+                string ImageFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Blog Images", blog.ImagePath);
+                if (File.Exists(ImageFilePath))
+                {
+                    File.Delete(ImageFilePath);
+                }
+            }
+            var likes = await _context.Likes.Where(l => l.BlogID == blogId).ToListAsync();
+            _context.Likes.RemoveRange(likes);
+            var comments = await _context.Comments.Where(c => c.BlogPostId == blogId).ToListAsync();
+            _context.Comments.RemoveRange(comments);
+
+
+
             _context.Blogs.Remove(blog);
             await _context.SaveChangesAsync();
             return true;

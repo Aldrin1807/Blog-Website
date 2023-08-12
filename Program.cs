@@ -41,8 +41,9 @@ namespace Blog
             builder.Services.AddScoped<IBlogServices,BlogServices>();
             builder.Services.AddScoped<ICommentServices,CommentServices >();
             builder.Services.AddScoped<ILikeServices,LikeServices>();
+            builder.Services.AddScoped<IAdminServices, AdminServices>();
 
-            
+
 
             // JWT Configuration
             builder.Services.AddSwaggerGen(options =>
