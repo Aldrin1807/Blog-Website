@@ -46,15 +46,20 @@ namespace Blog.Data.Services
 
         public async Task<bool> Register(RegisterDTO register)
         {
-            var emailExist = _userManager.FindByEmailAsync(register.Email);
-            var usernameExist = _userManager.FindByNameAsync(register.Username);
-            if(emailExist != null || usernameExist!=null)
+            var emailExist =await _userManager.FindByEmailAsync(register.Email);
+            var usernameExist =await _userManager.FindByNameAsync(register.Username);
+            if (emailExist != null)
             {
-                throw new Exception("Email or Username already exist");
+                throw new Exception("Email already exists");
             }
 
-            await CreateRoleIfNotExists("User");
-            await CreateRoleIfNotExists("Admin");
+            if (usernameExist != null)
+            {
+                throw new Exception("Username already exists");
+            }
+
+            await CreateRoleIfNotExists(UserRoles.User);
+            await CreateRoleIfNotExists(UserRoles.Admin);
 
 
             var user = new ApplicationUser
@@ -65,9 +70,9 @@ namespace Blog.Data.Services
             var result =await _userManager.CreateAsync(user, register.Password);
             if (!result.Succeeded)
             {
-                throw new Exception("Something went wrong");
+                throw new Exception(result.ToString());
             }
-            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, UserRoles.User);
             await _context.SaveChangesAsync();
             return true;
 

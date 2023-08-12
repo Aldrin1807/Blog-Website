@@ -1,8 +1,11 @@
 
+using Blog.Data.IServices;
+using Blog.Data.Services;
 using Blog.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -22,9 +25,21 @@ namespace Blog
                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultString"))
                );
             
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 7;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+            })
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
+
+            builder.Services.AddScoped<IAuthServices,AuthServices>();
+         //   builder.Services.AddScoped<IBlogServices, BlogServices>();
+          //  builder.Services.AddScoped<ICommentServices,CommentServices >();
+           // builder.Services.AddScoped<ILikeServices,LikeServices>();
 
 
 
@@ -91,6 +106,15 @@ namespace Blog
             }
 
             app.UseHttpsRedirection();
+
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "Blog Images")),
+                    RequestPath = "/Blog Images"
+            });
+
 
             app.UseAuthentication();
             app.UseAuthorization();
