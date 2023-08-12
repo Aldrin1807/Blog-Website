@@ -70,5 +70,18 @@ namespace Blog.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("get-users-blogs")]
+        public async Task<IActionResult> GetUserBlogs(string userID)
+        {
+            try
+            {
+                var response = await _services.GetUsersBlogs(userID);
+                return Ok(response);
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }   
     }
 }

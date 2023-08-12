@@ -85,6 +85,12 @@ namespace Blog.Data.Services
 
         public async Task<List<Models.Blog>> GetBlogs()=>await _context.Blogs.ToListAsync();
 
+        public async Task<List<Models.Blog>> GetUsersBlogs(string userID)
+        {
+            return await _context.Blogs.Where(b => b.UserID == userID).ToListAsync();
+            
+        }
+
         public async Task<bool> UpdateBlog(BlogDTO blog,int blogID)
         {
             var _blog = await _context.Blogs.FirstOrDefaultAsync(b => b.ID == blogID);
