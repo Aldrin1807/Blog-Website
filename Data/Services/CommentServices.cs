@@ -45,16 +45,20 @@ namespace Blog.Data.Services
         public async Task<bool> MakeComment(CommentDTO commentDTO)
         {
             var blog = await _context.Blogs.FirstOrDefaultAsync(b => b.ID == commentDTO.BlogPostId);
-            var user = await _userManager.FindByIdAsync(commentDTO.UserId);
+           
 
-           if(blog == null || user == null)throw new Exception("User or Blog does not exist");
+           if(blog == null)throw new Exception("Blog does not exist");
             var comment = new Comment
             {
                 BlogPostId = commentDTO.BlogPostId,
                 Content = commentDTO.Content,
                 CommentDate = DateTime.Now,
-                UserId = commentDTO.UserId
+                
             };
+            if (commentDTO.UserId != null)
+            {
+                comment.UserId = commentDTO.UserId;
+            }
             await _context.Comments.AddAsync(comment);
             await _context.SaveChangesAsync();
             return true;    

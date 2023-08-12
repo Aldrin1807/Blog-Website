@@ -30,6 +30,8 @@ namespace Blog.Controllers
             }
         }
 
+        //NonAuthenticated users can make comments
+        [AllowAnonymous]
         [HttpPost("make-comment")]
         public async Task<IActionResult> MakeComment([FromBody] CommentDTO comment)
         {

@@ -34,16 +34,22 @@ namespace Blog
                 .OnDelete(DeleteBehavior.NoAction);
 
             //Many to many for Comments
-            modelBuilder.Entity<Comment>()
-                .Property(c => c.Id)
-                .ValueGeneratedOnAdd();
+         modelBuilder.Entity<Comment>()
+            .Property(c => c.Id)
+            .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Comment>()
-                .HasKey(c => new {c.Id,c.BlogPostId,c.UserId });
+                .HasKey(c => new {c.Id,c.BlogPostId});
+
+
+            modelBuilder.Entity<Comment>()
+                .Property(c => c.UserId)
+                .IsRequired(false);
             modelBuilder.Entity<Comment>()
                 .HasOne(u=> u.User)
                 .WithMany(c=>c.Comments)
                 .HasForeignKey(u=>u.UserId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Comment>()
                 .HasOne(u=>u.Blog)

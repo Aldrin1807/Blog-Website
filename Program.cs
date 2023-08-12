@@ -40,7 +40,7 @@ namespace Blog
             builder.Services.AddScoped<IAuthServices,AuthServices>();
             builder.Services.AddScoped<IBlogServices,BlogServices>();
             builder.Services.AddScoped<ICommentServices,CommentServices >();
-           // builder.Services.AddScoped<ILikeServices,LikeServices>();
+            builder.Services.AddScoped<ILikeServices,LikeServices>();
 
             
 
